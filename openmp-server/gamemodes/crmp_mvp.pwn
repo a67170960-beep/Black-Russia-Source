@@ -130,6 +130,7 @@ public OnPlayerSpawn(playerid)
         return 1;
     }
 
+    ResetPlayerMoney(playerid);
     GivePlayerMoney(playerid, g_money[playerid]);
     SpawnAtBase(playerid);
     return 1;
