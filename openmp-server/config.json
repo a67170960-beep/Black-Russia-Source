@@ -1,0 +1,24 @@
+{
+  "name": "Own CRMP MVP",
+  "language": "Russian",
+  "announce": false,
+  "enable_query": true,
+  "max_players": 50,
+  "network": {
+    "bind": "127.0.0.1",
+    "port": 7777
+  },
+  "game": {
+    "mode": "Own CRMP MVP",
+    "map": "Local phone test"
+  },
+  "pawn": {
+    "main_scripts": [
+      "crmp_mvp"
+    ]
+  },
+  "rcon": {
+    "enable": false,
+    "password": "change-me"
+  }
+}
