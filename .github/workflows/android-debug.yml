@@ -18,26 +18,40 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Java 11
+      - name: Set up Java 17 for Android SDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "11"
-          cache: gradle
+          java-version: "17"
 
       - name: Install Android SDK packages
         shell: bash
         run: |
           export ANDROID_HOME="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
           export ANDROID_SDK_ROOT="$ANDROID_HOME"
-          export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
 
-          yes | sdkmanager --licenses || true
+          SDKMANAGER="$(find "$ANDROID_HOME" -type f -name sdkmanager | head -n 1)"
 
-          sdkmanager \
+          if [ -z "$SDKMANAGER" ]; then
+            echo "sdkmanager not found in $ANDROID_HOME"
+            exit 1
+          fi
+
+          echo "Using sdkmanager: $SDKMANAGER"
+
+          yes | "$SDKMANAGER" --licenses || true
+
+          "$SDKMANAGER" \
             "platform-tools" \
             "platforms;android-30" \
             "build-tools;30.0.1"
+
+      - name: Set up Java 11 for Gradle
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "11"
+          cache: gradle
 
       - name: Build debug APK
         shell: bash
