@@ -24,7 +24,6 @@ import org.ini4j.Wini;
 import java.io.File;
 import java.io.IOException;
 
-import com.downloader.*;
 
 public class SettingsFragment extends Fragment {
 
